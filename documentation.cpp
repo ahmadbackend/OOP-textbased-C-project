@@ -40,3 +40,46 @@ std::cout<<"6: Continue"<<std::endl;
 std::cout<<"==================="<<std::endl;
 std::cout<<"Type 1-6, Type 0 to break"<<std::endl;
 }
+
+void getUserOption(int userOption)
+{
+    
+switch (userOption)
+ {
+    case 0:
+    {
+    invalid();
+  
+    break;
+    }
+    case 1:
+    {
+    help();
+    break;
+    }
+   case 2:
+    {
+    status();
+    break;
+    }
+    case 3:
+    {
+    makeOffer();
+    break;
+    }
+    case 4:
+    {
+    makeBid();
+    break;
+    }
+    case 5:
+    {
+    checkWallet();
+    break;
+    }
+    default:
+    {
+    nextFrame();
+    }
+}
+}
