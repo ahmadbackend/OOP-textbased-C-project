@@ -1,61 +1,56 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include "OrderBookEntry.h"
+#include "MerkelMain.h"
+#include "CSVReader.h"
 
-//#include "Merkel.h" 
-
-#include<iostream>
-#include<string>
-#include<vector>
-#include<fstream>
-using namespace std;
-int userOption;
-
-
-vector<string> tokenise(string csvLine, char separator){
-    vector<string> tokens;
-//char separator = ','; // the character that separates the tokens
-int start, end; //used to delineate the position of the tokens
-start = csvLine.find_first_not_of(separator,0);
-string token;
-
-do{
-    end = csvLine.find_first_of (separator,start); 
-   
-if (start == csvLine.length() || start == end)// ## nothing more to find
-{break;
-}
-if (end >= 0) token = csvLine.substr(start, end - start) ;//## start, substring length
-
-else token = csvLine.substr(start, csvLine.length() - start);
-
-tokens.push_back(token);
-cout<<"test"<<"start"<<start<<"end"<<end<<endl;
-start = csvLine.find_first_not_of(separator,end+1);  //## move past this token
- 
-}
-while (end >0); //## continue loop condition
- for( string tok : tokens) cout <<tok<<endl;
-return tokens;
-}
 int main()
 {
 
-string line;
- ifstream csv{"datas.csv"};
- try
- {
-    /* code */
-    (csv.is_open());{
-    while(std::getline(csv,line)){
-        cout<<line<<endl;
+    MerkelMain app{};
+    app.init();
 
-    }
-    csv.close();
- }
- }
- catch(...)
- {
-   cout<<"failed"<<endl;
- }
-
-
-return 0;
 }
+
+
+
+
+
+
+//     std::vector<OrderBookEntry> orders;
+
+//     orders.push_back(  OrderBookEntry{1000, 
+//                           0.02, 
+//                         "2020/03/17 17:01:24.884492", 
+//                         "BTC/USDT", 
+//                         OrderBookType::bid}    );
+
+//     orders.push_back(  OrderBookEntry{2000, 
+//                           0.02, 
+//                         "2020/03/17 17:01:24.884492", 
+//                         "BTC/USDT", 
+//                         OrderBookType::bid}    );
+        
+
+//    // std::cout << "The price is " << orders[1].price << std::endl;
+
+//     for (OrderBookEntry& order : orders)
+//     {
+//         std::cout << "The price is " << order.price << std::endl;
+//     }
+
+//     for (unsigned int i = 0; i < orders.size() ; ++i)
+//     {
+//         std::cout << "The price is " << orders[i].price << std::endl;
+//     }
+
+//     for (unsigned int i = 0; i < orders.size() ; ++i)
+//     {
+//         std::cout << "The price is " << orders.at(i).price << std::endl;
+//     }
+
+
+
+
+ 
