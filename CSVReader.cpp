@@ -1,6 +1,7 @@
 #include "CSVReader.h"
 #include <iostream>
 #include <fstream>
+using namespace std;
 
 CSVReader::CSVReader()
 {
@@ -48,6 +49,26 @@ std::vector<std::string> CSVReader::tokenise(std::string csvLine, char separator
 
    return tokens; 
 }
+     OrderBookEntry CSVReader::stringsToOBE( string priceS, string amountS,
+                                        string timeStamp,std::string product,
+                                         OrderBookType orderType){
+        double price, amount;
+      try {
+         price = std::stod(priceS);
+         amount = std::stod(amountS);
+    }catch(const std::exception& e){
+        std::cout << " CSVReader:: stringsToOBE bad" << price<< std::endl;
+        std::cout << " CSVReader:: stringsToOBE bad" << amount<< std::endl; 
+        throw;        
+    }
+     OrderBookEntry obej{price, 
+                        amount, 
+                        timeStamp,
+                        product, 
+                        orderType};
+    return obej;
+     }
+
 
 OrderBookEntry CSVReader::stringsToOBE(std::vector<std::string> tokens)
 {

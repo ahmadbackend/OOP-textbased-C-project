@@ -62,3 +62,16 @@ using namespace std;
     }
  return spread/orders.size();
  }
+       string OrderBook:: getEarliestTime(){
+       return orders[0].timestamp;
+       };
+      string OrderBook::getNextTimeFrame( string tim){
+        for(OrderBookEntry& e : orders){
+            if (e.timestamp>tim){
+                return e.timestamp;
+            }
+        }
+        return orders[0].timestamp;
+      };
+
+

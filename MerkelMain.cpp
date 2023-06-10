@@ -5,6 +5,9 @@
 #include "CSVReader.h"
 #include <string>
 #include "OrderBook.h"
+#include<limits>
+#include <stdio.h>
+#include <ctime>
 MerkelMain::MerkelMain()
 {
 
@@ -13,7 +16,10 @@ MerkelMain::MerkelMain()
 
 void MerkelMain::init()
 {
-   // loadOrderBook();
+    /** now  earliest time will be initialized to first time stamp
+     * of orders
+    */
+    currentTime=orderBook.getEarliestTime();
     int input;
     while(true)
     {
@@ -41,6 +47,7 @@ void MerkelMain::printMenu()
     std::cout << "6: Continue " << std::endl;
 
     std::cout << "============== " << std::endl;
+    std::cout <<"current time is " <<currentTime <<endl;
 }
 
 void MerkelMain::printHelp()
@@ -54,9 +61,9 @@ void MerkelMain::printMarketStats()
   for( string const & p: orderBook.getKnownProducts()){
     cout<<"product is "<<p<<endl;
     vector<OrderBookEntry>entries=orderBook.getOrders(OrderBookType::ask,p,
-                                    "2020/03/17 17:01:24.884492");
+                                    currentTime);
      vector<OrderBookEntry>entriesBid=orderBook.getOrders(OrderBookType::bid,p,
-                                    "2020/03/17 17:01:24.884492");
+                                    currentTime);
     cout<<"ask"<< entries.size()<<endl;
     cout<<"average spread is "<< orderBook.pricesSpread(entries,entriesBid)<<endl;
     cout<<"highest price"<< orderBook.getHighestPrice(entries) <<endl;
@@ -67,9 +74,22 @@ void MerkelMain::printMarketStats()
     
 }
 
-void MerkelMain::enterOffer()
+void MerkelMain::enterASK()
 {
-    std::cout << "Mark and offer - enter the amount " << std::endl;
+    std::cout << "Mark an ask  - enter the amount " << std::endl;
+    std::string input ;
+    cin.ignore(std::numeric_limits<streamsize>::max(),'\n');
+    std::getline(cin,input);
+
+   vector<string>token= CSVReader::tokenise(input,',');
+   if(token.size()!=3){
+        cout<<"bad input  "<< input <<endl;
+   }
+   else {
+    OrderBookEntry ob= CSVReader::stringsToOBE(
+        token[1],token[2],"currentTime",token[0],OrderBookType::ask);
+
+   }
 }
 
 void MerkelMain::enterBid()
@@ -84,7 +104,7 @@ void MerkelMain::printWallet()
         
 void MerkelMain::gotoNextTimeframe()
 {
-    std::cout << "Going to next time frame. " << std::endl;
+    currentTime=orderBook.getNextTimeFrame(currentTime);
 }
  
 int MerkelMain::getUserOption()
@@ -113,7 +133,7 @@ void MerkelMain::processUserOption(int userOption)
     }
     if (userOption == 3) 
     {
-        enterOffer();
+        enterASK();
     }
     if (userOption == 4) 
     {

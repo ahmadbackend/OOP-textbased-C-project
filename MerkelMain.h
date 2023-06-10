@@ -6,13 +6,15 @@ class MerkelMain
 {
     public:
         MerkelMain();
+         string currentTime;
         /** Call this to start the sim */
         void init();
+
     private: 
         void printMenu();
         void printHelp();
         void printMarketStats();
-        void enterOffer();
+        void enterASK();
         void enterBid();
         void printWallet();
         void gotoNextTimeframe();

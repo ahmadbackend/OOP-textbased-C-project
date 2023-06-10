@@ -11,6 +11,8 @@ class OrderBook{
     OrderBook (string filename);
     /** return vector of all known products*/
       vector<string> getKnownProducts();
+      string getEarliestTime();
+      string getNextTimeFrame( string tim);
     /** return orders according to their type and time and product name*/
      vector<OrderBookEntry> getOrders(OrderBookType type, string product, string timeStamp);
      static double getHighestPrice( vector<OrderBookEntry>& orders);
