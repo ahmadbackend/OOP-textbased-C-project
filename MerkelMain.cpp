@@ -47,7 +47,7 @@ void MerkelMain::printMenu()
     std::cout << "6: Continue " << std::endl;
 
     std::cout << "============== " << std::endl;
-    std::cout <<"current time is " <<currentTime <<endl;
+    std::cout <<"current time is " <<currentTime  <<endl;
 }
 
 void MerkelMain::printHelp()
@@ -76,25 +76,42 @@ void MerkelMain::printMarketStats()
 
 void MerkelMain::enterASK()
 {
-    std::cout << "Mark an ask  - enter the amount " << std::endl;
+    std::cout << "Make an ask - enter the amount: product,price, amount, eg ETH/BTC,200,0.5 " << std::endl;
     std::string input ;
-    cin.ignore(std::numeric_limits<streamsize>::max(),'\n');
+    //cin.ignore(std::numeric_limits<streamsize>::max(),'\n');
     std::getline(cin,input);
 
    vector<string>token= CSVReader::tokenise(input,',');
    if(token.size()!=3){
-        cout<<"bad input  "<< input <<endl;
+        cout<<"CSVReader::tokenise bad input  "<< input <<endl;
    }
    else {
     OrderBookEntry ob= CSVReader::stringsToOBE(
-        token[1],token[2],"currentTime",token[0],OrderBookType::ask);
-
+        token[1],token[2],currentTime,token[0],OrderBookType::ask);
+        orderBook.insertOrder(ob);
    }
+  
+
 }
 
 void MerkelMain::enterBid()
 {
-    std::cout << "Make a bid - enter the amount" << std::endl;
+    std::cout << "Make a bid - product,price, amount, eg ETH/BTC,200,0.5 t" << std::endl;
+
+    std::string input ;
+    //cin.ignore(std::numeric_limits<streamsize>::max(),'\n');
+    std::getline(cin,input);
+
+   vector<string>token= CSVReader::tokenise(input,',');
+   if(token.size()!=3){
+        cout<<"CSVReader::tokenise bad input  "<< input <<endl;
+   }
+   else {
+    OrderBookEntry ob= CSVReader::stringsToOBE(
+        token[1],token[2],currentTime,token[0],OrderBookType::bid);
+        orderBook.insertOrder(ob);
+
+   }
 }
 
 void MerkelMain::printWallet()
@@ -109,12 +126,17 @@ void MerkelMain::gotoNextTimeframe()
  
 int MerkelMain::getUserOption()
 {
-    int userOption;
-
+    int userOption = 0;
+    std::string line;
     std::cout << "Type in 1-6" << std::endl;
-    std::cin >> userOption;
-    std::cout << "You chose: " << userOption << std::endl;
-    return userOption;
+    std::getline(std::cin, line);
+    try{
+    userOption = std::stoi(line);
+    }catch(const std::exception& e)
+    {
+}
+std::cout << "You chose: " << userOption << std::endl;
+return userOption;
 }
 
 void MerkelMain::processUserOption(int userOption)
