@@ -20,6 +20,7 @@ void MerkelMain::init()
      * of orders
     */
     currentTime=orderBook.getEarliestTime();
+   // wallet.insertCurrency("BTC",10);
     int input;
     while(true)
     {
@@ -121,11 +122,12 @@ void MerkelMain::printWallet()
         
 void MerkelMain::gotoNextTimeframe()
 {
-    currentTime=orderBook.getNextTimeFrame(currentTime);
    std::vector<OrderBookEntry>sales=orderBook.matchAsksToBids("ETH/BTC",currentTime);
    for(OrderBookEntry& sale:sales){
     std::cout <<"sale amount "<<sale.amount<< " sale price"<<sale.price<<std::endl;
    }
+    currentTime=orderBook.getNextTimeFrame(currentTime);
+
 }
  
 int MerkelMain::getUserOption()

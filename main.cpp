@@ -4,13 +4,19 @@
 #include "OrderBookEntry.h"
 #include "MerkelMain.h"
 #include "CSVReader.h"
+#include"Wallet.h"
 
 int main()
 {
 
-    MerkelMain app{};
-    app.init();
-
+   // MerkelMain app{};
+   // app.init();
+   Wallet wall{};
+   wall.insertCurrency("BTC",10);
+  cout<<wall.doesContainCurrency("BTC",10)<<endl;
+  cout<<wall.removeCurrency("BTC",5);
+  cout<<wall.toString()<<endl;
+  cout<<wall.removeCurrency("BTC",5)<<endl;
 }
 
 

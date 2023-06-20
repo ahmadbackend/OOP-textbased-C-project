@@ -2,6 +2,7 @@
 using namespace std;
 #include <vector>
 #include "OrderBook.h"
+//#include "Wallet.h"
 class MerkelMain
 {
     public:
@@ -21,6 +22,7 @@ class MerkelMain
         int getUserOption();
         void processUserOption(int userOption);
         
-        OrderBook orderBook{"20200317.csv"};
+        OrderBook orderBook{"text.csv"};
+       // Wallet wallet;
 
 }; 
